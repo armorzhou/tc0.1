@@ -1,0 +1,2 @@
+log
+TCLOG("LEVEL", "formats", args);
