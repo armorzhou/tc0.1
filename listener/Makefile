@@ -13,7 +13,7 @@ listener.o:listener.c listener.h
 	${CC} ${CFLAGS} -c -o $@ $<
 
 test:main.o
-	${CC} ${CFLAGS} -o $@ $< ${lib}
+	${CC} ${CFLAGS} -o $@ $< ${lib} ../init/libinit.a
 
 main.o:main.c
 	${CC} ${CFLAGS} -c -o $@ $<

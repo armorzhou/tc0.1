@@ -13,17 +13,11 @@
 #include <poll.h>
 #include "../gvars.h"
 
-#define INVALID_SOCKET  -1
-
-static char volatile abort_loop = 0;
-static unsigned int select_errors;
-static unsigned int test_flags;
 static unsigned short tc_port_timeout = 10;
 static unsigned int back_log = 1024;
 static char *my_bind_addr_str = NULL;
-static int ip_sock;
 
-void network_init()
+void listener_init()
 {
     int ret, arg;
     uint waited;
@@ -58,11 +52,11 @@ void network_init()
         for (a = ai; a != NULL; a = a->ai_next)
         {
             ip_sock = socket(a->ai_family, a->ai_socktype, a->ai_protocol);
-            if (ip_sock != INVALID_SOCKET)
+            if (ip_sock != -1)
                 break;
         }
 
-        if (ip_sock == INVALID_SOCKET)
+        if (ip_sock == -1)
         {
             printf("error Got error: %d from socket()\n", errno);
             perror((char *) (ELIBSCN)); /* purecov: tested */
@@ -109,97 +103,5 @@ void network_init()
         exit(1);
 
     printf("server started\n");
-    return;
-}
-
-void handle_connections_sockets()
-{
-    int sock = 0, new_sock = 0, i = 0;
-    uint error_count = 0, retry = 0;
-    struct sockaddr_storage cAddr;
-    int ip_flags = 0, flags = 0, retval;
-    int socket_count = 0;
-    struct pollfd fds[2]; // for ip_sock and unix_sock
-
-    if (ip_sock != INVALID_SOCKET)
-    {
-        fds[socket_count].fd = ip_sock;
-        fds[socket_count].events = POLLIN;
-        socket_count++;
-        ip_flags = fcntl(ip_sock, F_GETFL, 0);
-    }
-
-    printf("Waiting for connections.\n");
-    while (!abort_loop)
-    {
-        retval = poll(fds, socket_count, -1);
-
-        if (retval < 0)
-        {
-            if (errno != EINTR)
-            {
-                if (!select_errors++ && !abort_loop) /* purecov: inspected */
-                    printf("Got error %d from select\n", errno); /* purecov: inspected */
-            }
-            continue;
-        }
-
-        /* Is this a new connection request ? */
-        for (i = 0; i < socket_count; ++i)
-        {
-            if (fds[i].revents & POLLIN)
-            {
-                sock = fds[i].fd;
-                flags = fcntl(sock, F_GETFL, 0);
-                break;
-            }
-        }
-
-        if (!(test_flags & 8))
-        {
-            fcntl(sock, F_SETFL, flags | O_NONBLOCK);
-        }
-
-        for (retry = 0; retry < 10; retry++)
-        {
-            socklen_t length = sizeof (struct sockaddr_storage);
-            new_sock = accept(sock, (struct sockaddr *) (&cAddr),
-                    &length);
-            if (new_sock != INVALID_SOCKET ||
-                    (errno != EINTR && errno != EAGAIN))
-                break;
-            if (!(test_flags & 8))
-            {
-                if (retry == 10 - 1)
-                    fcntl(sock, F_SETFL, flags); // Try without O_NONBLOCK
-            }
-        }
-
-        if (!(test_flags & 8))
-            fcntl(sock, F_SETFL, flags);
-
-        if (new_sock == INVALID_SOCKET)
-        {
-            if ((error_count++ & 255) == 0) // This can happen often
-                printf("Error in accept\n");
-            if (errno == ENFILE || errno == EMFILE)
-                sleep(1); // Give other threads some time
-            continue;
-        }
-
-        socklen_t dummyLen;
-        struct sockaddr_storage dummy;
-        dummyLen = sizeof (dummy);
-        if (getsockname(new_sock, (struct sockaddr *) &dummy,
-                (socklen_t *) & dummyLen) < 0)
-        {
-            printf("Error on new connection socket\n");
-            (void) shutdown(new_sock, SHUT_RDWR);
-            (void) close(new_sock);
-            continue;
-        }
-
-        //处理请求
-    }
     return;
 }

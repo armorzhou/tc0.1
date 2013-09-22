@@ -23,6 +23,7 @@ extern "C"
 #define VERSION_MIDDLE  "0"
 #define VERSION_SMALL   "0"
 
+    int ip_sock;
     unsigned int tc_port;
     unsigned int manage_port;
 

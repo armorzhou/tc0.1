@@ -13,6 +13,7 @@ extern "C"
 {
 #endif
 
+    extern int ip_sock;
     extern unsigned int tc_port;
     extern unsigned int manage_port;
 

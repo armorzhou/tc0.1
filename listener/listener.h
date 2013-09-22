@@ -12,7 +12,8 @@
 extern "C"
 {
 #endif
-
+    
+void listener_init();
 
 #ifdef	__cplusplus
 }
