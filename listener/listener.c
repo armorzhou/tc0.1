@@ -11,7 +11,8 @@
 #include <arpa/inet.h>
 #include <netinet/in.h>
 #include <poll.h>
-#include "../gvars.h"
+
+#include "../tc_global.h"
 
 static unsigned short tc_port_timeout = 10;
 static unsigned int back_log = 1024;
