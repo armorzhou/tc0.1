@@ -1,7 +1,11 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
+#include <mysql.h>
 #include "variables.h"
+
+static struct rand_struct MYSCRAMBLERANDST;
+struct rand_struct *myrand = &MYSCRAMBLERANDST;
 
 void first_init()
 {
