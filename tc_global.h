@@ -12,12 +12,27 @@
 #include <mysql.h>
 #endif
 
+#define INVALID_ACL     2
+#define ACL_INSERT      2 << 1
+#define ACL_DELETE      2 << 2
+#define ACL_UPDATE      2 << 3
+#define ACL_SELECT      2 << 4
+#define ACL_ALTER       2 << 5
+#define ACL_CREATE      2 << 6
+#define ACL_DROP        2 << 7
+#define ACL_TRUNCATE    2 << 8
+#define ACL_CONNECT     2 << 9
+#define ACL_CONNECT_DB  2 << 10
+
+#define ACL_ALL         (ACL_INSERT + ACL_DELETE + ACL_UPDATE + ACL_SELECT + \
+                        ACL_ALTER + ACL_CREATE + ACL_DROP + ACL_TRUNCATE + \
+                        ACL_CONNECT + ACL_CONNECT_DB)
+
 typedef struct st_session session;
 struct st_session {
     ulong client_capabilities;
     NET net;
 };
-
 
 extern int ip_sock;
 extern unsigned int tc_port;
