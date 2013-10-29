@@ -1,26 +1,25 @@
-CC = gcc
-BASICOPTS = -g
-CFLAGS = $(BASICOPTS) -Wall -O3
+CCC = g++
+CXX = g++
+BASICOPTS = -g -Wall -O3
+CCFLAGS = $(BASICOPTS)
+CXXFLAGS = $(BASICOPTS)
+CCADMIN = 
 
-lib =liblsn.a
 
-all:${lib} test
-	
-${lib}:listener.o
-	ar rv $@ $<
+TARGETDIR_liblsn.a=.
+TARGETDIR_test=.
 
-listener.o:listener.c listener.h
-	${CC} ${CFLAGS} -c -o $@ $<
 
-test:main.o
-	${CC} ${CFLAGS} -o $@ $< ${lib} ../init/libinit.a
+all: listener.o
 
-main.o:main.c
-	${CC} ${CFLAGS} -c -o $@ $<
-	
+$(TARGETDIR_liblsn.a)/listener.o: $(TARGETDIR_liblsn.a) listener.cpp
+	$(COMPILE.cc) $(CCFLAGS_liblsn.a) $(CPPFLAGS_liblsn.a) -o $@ listener.cpp
+
+
 clean:
-	rm -f *.[oa] test ${lib}
-	
+	rm -f \
+		$(TARGETDIR_liblsn.a)/listener.o \
+
 .KEEP_STATE:
 .KEEP_STATE_FILE:.make.state.GNU-amd64-Linux
 

@@ -1,0 +1,56 @@
+/* Author: tangchao
+ * Email: tangchao@jd.com
+ */
+权限管理
+
+权限划分三个等级：
+用户资源级：按照全局资源分配，将权限授予全局。例如GRANT SELECT ON *.*授予全局。
+数据库级：授权给数据库的权限。例如GRANT SELECT ON DB.*，用户可以对DB下的所有表SELECT。
+表级：操作到表。例如GRANT SELECT ON DB.TABLE，将权限授予表。
+    目前并不支持用户拥有用户资源级的具体权限，要么用户是超级用户，要么拥有至少具体到
+数据库级的权限。
+
+权限优先：
+1. 用户级权限>数据库级别>表级
+    即同一权限优先检查用户级，其次数据库级别，再次表级。
+2. 超级管理员用户，对任意资源均可访问，超级管理员账户对将来的任何资源也具有权限。
+
+用户由来：
+1. sql node接收到创建用户的语句，解析后将权限持久化存放到meta server。
+2. 直接往meta server插入一个新用户，通知sql node更新。
+
+权限列表：user,db,table拥有以下权限
+#define SELECT_PRI      1
+#define INSERT_PRI      2
+#define UPDATE_PRI      4
+#define DELETE_PRI      8
+#define TRUNCATE_PRI    16
+#define DROP_PRI        32
+#define CREATE_PRI      64
+#define GRANT_PRI       128
+#define REVOKE_PRI      256
+#define INIT_DB         512
+
+权限转换：在程序里面使用一个二进制位表示一个具体权限，在meta server为了更直观的显示
+    用户拥有何种权限，使用字符串表示，因此需要做权限转换，这对用户完全透明。
+
+关闭权限控制：关闭权限控制，不会检查用户权限，
+    但是会检查用户，此时用户必须存在且密码正确，否则仍然无法登录。
+
+
+使用方法：
+#include "sql_acl.h"    //包含头文件
+acl->sql_acl_init();    //执行初始化
+
+/* test data */
+char *user = "haha"; //or string user = "haha"
+char *host = "1.1.1.1"; //or string host = "1.1.1.1"
+string db = "mysql";
+string table = "user";
+
+/* no user return NULL, otherwise return a pointer point user resouce */
+ACL_SCHEMA *user_acl = acl->find_user(SCHEMA(user, host));  //查询用户
+
+/* return true allow access */
+user_acl->check_db(&db, &table, SELECT_PRI);   //数据库级权限检查
+user_acl->check_table(&table, UPDATE_RPI);    //表级权限检查

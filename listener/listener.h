@@ -1,23 +1,22 @@
 /* 
- * File:   listener.h
+ * File:   listen.h
  * Author: tangchao
  *
- * Created on 2013年9月22日, 下午3:31
+ * Created on 2013年9月16日, 上午10:24
  */
 
 #ifndef LISTENER_H
 #define	LISTENER_H
 
-#ifdef	__cplusplus
-extern "C"
-{
-#endif
-    
-void listener_init();
+#define DEFAULT_TCP_PORT        3344
+#define DEFAULT_BACK_LOG        1024
+#define DEFAULT_TC_PORT_TIMEOUT 10
 
-#ifdef	__cplusplus
-}
-#endif
+class LISTENER
+{
+public:
+    void init(int *ip_sock, char *my_bind_addr_str, unsigned int *dport);
+};
 
 #endif	/* LISTENER_H */
 

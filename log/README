@@ -1,2 +1,24 @@
-log
-TCLOG("LEVEL", "formats", args);
+/* Author: tangchao
+ * Email: tangchao@jd.com
+ */
+The BSD 3-Clause License
+----------------------------
+日志使用说明
+1. 默认使用c语言风格的google log作为我们的日志系统。
+2. 要使用另外一个日志插件在global.h中打开即可。
+
+google日志使用方法
+1. 在主程序启动的时候需要初始化日志模块
+2. 代码中使用
+    #include "../log/jlog.h" 
+    c风格   jlog(INFO,  "Found %s is a mysql", ip);
+    c++风格 jlog(INFO) << "Found " << ip << " is a mysql";
+3. 日志等级依次为：INFO, WARNING, ERROR, FATAL
+4. FATAL：错误会宕机生成stack trace
+5. DEBUG模式，童鞋们不要用DEBUG模式，会丢失日志的
+
+google日志编译参考Makefile：
+依赖库：-Wl,-rpath -Wl,LIBDIR -lglog
+
+more descriptions:
+http://google-glog.googlecode.com/svn/trunk/doc/glog.html

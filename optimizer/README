@@ -1,0 +1,19 @@
+/* Author: tangchao
+ * Email: tangchao@jd.com
+ */
+优化器
+
+尽量和其他代码独立开发，
+可以作为第三方独立应用使用。
+
+
+1. select name from table order by id
+        -> select name, id from table order by id;
+2. select name from table limit 10;
+        -> select name, primary from table order by primary asc limit 10;
+3. select id, name from table group name, ....;
+        -> partition by name.
+        -> parition by other
+4. select max(id) , name from table group name, ...;
+        -> partition by name.
+        -> partition by other.

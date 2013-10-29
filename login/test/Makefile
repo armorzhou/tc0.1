@@ -5,13 +5,11 @@ CCFLAGS = $(BASICOPTS)
 CXXFLAGS = $(BASICOPTS)
 CCADMIN = 
 
-OBJ = login55.o
+OBJ = testsend
 
-liblogin.a:${OBJ}
-	ar rv $@ $<
 	
-login55.o:login55.cpp
-	${CCC} ${BASICOPTS} -c -o $@ $<
+testsend.o:testsend.cpp
+	${CCC} ${BASICOPTS} -o $@ $< ../send_server_handshake.o
 
 	
 clean:
