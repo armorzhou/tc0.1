@@ -1,0 +1,8 @@
+/* Author: tangchao
+ * Email: tangchao@jd.com
+ */
+
+mysql_con.h
+extern class mysql_con *meta_conn;
+
+需要自己初始化meta_conn->

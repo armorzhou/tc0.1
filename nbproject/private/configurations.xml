@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configurationDescriptor version="89">
+  <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
+    <df root="." name="0">
+      <df name="acl">
+        <df name="test">
+          <in>acl_test.cpp</in>
+          <in>test_db.cpp</in>
+          <in>test_schema.cpp</in>
+        </df>
+        <in>acl_access.cpp</in>
+        <in>acl_access.h</in>
+        <in>acl_convert.cpp</in>
+        <in>acl_convert.h</in>
+        <in>acl_db.cpp</in>
+        <in>acl_db.h</in>
+        <in>acl_priv.cpp</in>
+        <in>acl_priv.h</in>
+        <in>acl_schema.cpp</in>
+        <in>acl_schema.h</in>
+        <in>privileges.h</in>
+        <in>schema.h</in>
+        <in>sql_acl.cpp</in>
+        <in>sql_acl.h</in>
+      </df>
+      <df name="connector">
+        <in>mysql_con.cpp</in>
+        <in>mysql_con.h</in>
+      </df>
+      <df name="include">
+        <in>base.h</in>
+        <in>byte_order_genric.h</in>
+      </df>
+      <df name="listener">
+        <df name="test">
+          <in>test.cpp</in>
+        </df>
+        <in>listener.cpp</in>
+        <in>listener.h</in>
+      </df>
+      <df name="log">
+        <in>jlog.cpp</in>
+        <in>jlog.h</in>
+        <in>main.cpp</in>
+      </df>
+      <df name="login">
+        <df name="test">
+          <in>testlogin.cpp</in>
+        </df>
+        <in>login.h</in>
+        <in>login55.cpp</in>
+        <in>login55.h</in>
+        <in>server_connection_cnf.cpp</in>
+        <in>server_connection_cnf.h</in>
+      </df>
+      <df name="protocol">
+        <df name="test">
+          <in>protocol_test.cpp</in>
+        </df>
+        <in>net_serv.cpp</in>
+        <in>net_serv.h</in>
+        <in>protocol.h</in>
+        <in>protocol_10.cpp</in>
+        <in>protocol_10.h</in>
+        <in>server_connection_cnf.cpp</in>
+        <in>server_connection_cnf.h</in>
+      </df>
+    </df>
+  </logicalFolder>
+  <projectmakefile>Makefile</projectmakefile>
+  <confs>
+    <conf name="Default" type="0">
+      <toolsSet>
+        <developmentServer>shell@172.17.4.50:22</developmentServer>
+        <platform>2</platform>
+      </toolsSet>
+      <compile>
+        <compiledirpicklist>
+          <compiledirpicklistitem>.</compiledirpicklistitem>
+          <compiledirpicklistitem>${AUTO_FOLDER}</compiledirpicklistitem>
+        </compiledirpicklist>
+        <compiledir>${AUTO_FOLDER}</compiledir>
+        <compilecommandpicklist>
+          <compilecommandpicklistitem>${MAKE} ${ITEM_NAME}.o</compilecommandpicklistitem>
+          <compilecommandpicklistitem>${AUTO_COMPILE}</compilecommandpicklistitem>
+        </compilecommandpicklist>
+        <compilecommand>${AUTO_COMPILE}</compilecommand>
+      </compile>
+      <dbx_gdbdebugger version="1">
+        <gdb_pathmaps>
+        </gdb_pathmaps>
+        <gdb_interceptlist>
+          <gdbinterceptoptions gdb_all="false" gdb_unhandled="true" gdb_unexpected="true"/>
+        </gdb_interceptlist>
+        <gdb_options>
+          <DebugOptions>
+          </DebugOptions>
+        </gdb_options>
+        <gdb_buildfirst gdb_buildfirst_overriden="false" gdb_buildfirst_old="false"/>
+      </dbx_gdbdebugger>
+      <nativedebugger version="1">
+        <engine>gdb</engine>
+      </nativedebugger>
+      <runprofile version="9">
+        <runcommandpicklist>
+          <runcommandpicklistitem>"${OUTPUT_PATH}"</runcommandpicklistitem>
+        </runcommandpicklist>
+        <runcommand>"${OUTPUT_PATH}"</runcommand>
+        <rundir>.</rundir>
+        <buildfirst>false</buildfirst>
+        <terminal-type>0</terminal-type>
+        <remove-instrumentation>0</remove-instrumentation>
+        <environment>
+        </environment>
+      </runprofile>
+    </conf>
+  </confs>
+</configurationDescriptor>
