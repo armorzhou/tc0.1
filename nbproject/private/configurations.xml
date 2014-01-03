@@ -8,7 +8,6 @@
           <in>test_db.cpp</in>
           <in>test_schema.cpp</in>
         </df>
-        <in>acl_access.cpp</in>
         <in>acl_access.h</in>
         <in>acl_convert.cpp</in>
         <in>acl_convert.h</in>

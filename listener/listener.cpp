@@ -16,10 +16,10 @@ void
 LISTENER::init(int *ip_sock, char *my_bind_addr_str, unsigned int *dport)
 {
     int ret, arg;
-    uint waited;
-    uint this_wait;
-    uint retry;
-    uint port;
+    unsigned int waited;
+    unsigned int this_wait;
+    unsigned int retry;
+    unsigned int port;
     char port_buf[NI_MAXSERV];
     ret = 0;
 
@@ -28,6 +28,10 @@ LISTENER::init(int *ip_sock, char *my_bind_addr_str, unsigned int *dport)
     if (NULL == dport)
     {
         port = DEFAULT_TCP_PORT;
+    }
+    else
+    {
+        port = *dport;
     }
 
     if (port != 0)
@@ -44,8 +48,6 @@ LISTENER::init(int *ip_sock, char *my_bind_addr_str, unsigned int *dport)
 
         snprintf(port_buf, NI_MAXSERV, "%d", port);
         error = getaddrinfo(my_bind_addr_str, port_buf, &hints, &ai);
-        printf("bind %s, ai->ai_family=%d, ai->ai_protocol=%d\n",
-                my_bind_addr_str, ai->ai_family, ai->ai_protocol);
         if (error != 0)
         {
             printf("error Got error: %d from getaddrinfo()\n", error);
