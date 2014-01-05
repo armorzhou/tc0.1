@@ -1,59 +1,51 @@
+## -*- Makefile -*-
+##
+## �û�: tangchao
+## ʱ��: 2014-1-5 11:44:29
+## Makefile created by Oracle Solaris Studio.
+##
+## ���ļ����Զ���ɵġ�
+##
+
+
+#### �����й���Ŀ�깲��ı������͹��߶��� #####
 CCC = g++
 CXX = g++
-BASICOPTS = -g
+BASICOPTS = -g -Wall -m64
 CCFLAGS = $(BASICOPTS)
 CXXFLAGS = $(BASICOPTS)
 CCADMIN = 
 
 
-TARGETDIR_libjlog.a=.
-TARGETDIR_test=.
+# ����Ŀ��Ŀ¼��
+TARGETDIR_libtclog.a=.
 
 
-all: libjlog.a #test
+all: libtclog.a
 
-CPPFLAGS_libjlog.a = -I/usr/local/include
+## Ŀ��: libtclog.a
+OBJS_libtclog.a =  \
+	$(TARGETDIR_libtclog.a)/log.o
 
-OBJS_libjlog.a =  \
-	$(TARGETDIR_libjlog.a)/jlog.o
 
-
+# ���ӻ�鵵
 ARCPP = $(AR) $(ARFLAGS) $@ 
-$(TARGETDIR_libjlog.a)/libjlog.a: $(TARGETDIR_libjlog.a) $(OBJS_libjlog.a)
-	$(ARCPP) $(OBJS_libjlog.a)
+$(TARGETDIR_libtclog.a)/libtclog.a: $(TARGETDIR_libtclog.a) $(OBJS_libtclog.a)
+	$(ARCPP) $(OBJS_libtclog.a)
 
 
-$(TARGETDIR_libjlog.a)/jlog.o: $(TARGETDIR_libjlog.a) jlog.cpp
-	$(COMPILE.cc) $(CCFLAGS_libjlog.a) $(CPPFLAGS_libjlog.a) -o $@ jlog.cpp
-
-
-
-CPPFLAGS_test = -I/usr/local/include -L/usr/local/lib
-
-OBJS_test =  \
-	$(TARGETDIR_test)/jlog.o \
-	$(TARGETDIR_test)/main.o
-SYSLIBS_test = -Wl,-rpath -Wl,LIBDIR -lglog -llog4c
-USERLIBS_test =  $(SYSLIBS_test) 
-DEPLIBS_test =    
-LDLIBS_test = $(USERLIBS_test) libjlog.a  /usr/local/lib/liblog4c.a \
-	/usr/local/lib/libglog.a
-
-
-$(TARGETDIR_test)/test: $(TARGETDIR_test) $(OBJS_test) $(DEPLIBS_test)
-	$(LINK.cc) $(CCFLAGS_test) $(CPPFLAGS_test) -o $@ $(OBJS_test) $(LDLIBS_test)
-
-$(TARGETDIR_test)/main.o: $(TARGETDIR_test) main.cpp
-	$(COMPILE.cc) $(CCFLAGS_test) $(CPPFLAGS_test) -o $@ main.cpp
+# ��Դ�ļ�����Ϊ .o �ļ�
+$(TARGETDIR_libtclog.a)/log.o: $(TARGETDIR_libtclog.a) log.cpp
+	$(COMPILE.cc) $(CCFLAGS_libtclog.a) $(CPPFLAGS_libtclog.a) -o $@ log.cpp
 
 
 
+#### ����Ŀ�꽫��ɾ��������ɵ��ļ� ####
 clean:
 	rm -f \
-		$(TARGETDIR_libjlog.a)/libjlog.a \
-		$(TARGETDIR_libjlog.a)/jlog.o \
-		$(TARGETDIR_test)/test \
-		$(TARGETDIR_test)/main.o
+		$(TARGETDIR_libtclog.a)/libtclog.a \
+		$(TARGETDIR_libtclog.a)/log.o
+# ����������ϵ���
 .KEEP_STATE:
 .KEEP_STATE_FILE:.make.state.GNU-amd64-Linux
 
